@@ -9,6 +9,18 @@
           [routerLinkActiveOptions]="{ exact: true }"
         >
           <a 
+            routerLink="/search"
+          >
+            <span aria-hidden="true">🔍</span>
+            <span class="link-text">Search</span>
+          </a>
+        </li>
+
+        <li 
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a 
             routerLink="/music/1" 
             aria-current="page"
           >
@@ -47,6 +59,7 @@
 
 <main>
   <router-outlet></router-outlet>
+  <app-enhanced-player></app-enhanced-player>
 </main>
 
 <footer class="app-footer" role="contentinfo">

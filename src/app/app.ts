@@ -5,13 +5,14 @@ import { Music } from './Shared/Models/music.model';
 import { Category, Video } from './Shared/Models/video.model';
 import { MusicService } from './Core/Services/Music-Service/music-service';
 import { VideoService } from './Core/Services/Video-Service/video-service';
+import { EnhancedPlayerComponent } from './Features/enhanced-player/enhanced-player.component';
 
 
 @Component({
   selector: 'app-root',
     standalone: true,
   // Import the directives used in the template
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule, CommonModule, EnhancedPlayerComponent],
   templateUrl: './app.html',
  styleUrls: ['./app.scss']
 })

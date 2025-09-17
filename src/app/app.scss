@@ -2,21 +2,25 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #141414;
-  color: #e5e5e5;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #0A0A0A 100%);
+  color: #FFFFFF;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 // Header and Navigation Styling
 .app-header {
-  background-color: #141414;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
   padding: 0 4%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
 
   .nav-container {
     display: flex;
@@ -26,20 +30,23 @@
     flex-wrap: wrap;
   }
 
-  .nav-brand {
+  .brand {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #e50914;
+    background: linear-gradient(135deg, #00D4FF, #39FF14);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-decoration: none;
     letter-spacing: -1px;
     transition: color 0.3s ease;
 
     &:hover {
-      color: #ff3c3c;
+      transform: scale(1.05);
+      filter: brightness(1.2);
     }
   }
 
-  .nav-links {
+  .main-nav .nav-list {
     display: flex;
     list-style: none;
     margin: 0;
@@ -48,41 +55,102 @@
     flex-wrap: wrap;
 
     li {
+      position: relative;
+
       a {
-        color: #e5e5e5;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #B3B3B3;
         text-decoration: none;
         font-weight: 500;
-        transition: color 0.3s ease;
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+          transition: left 0.5s ease;
+        }
 
         &:hover {
-          color: #b3b3b3;
+          color: #00D4FF;
+          background: rgba(0, 212, 255, 0.1);
+          transform: translateY(-2px);
+
+          &::before {
+            left: 100%;
+          }
+
+          .link-text {
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+          }
         }
       }
 
       &.active-link a {
-        color: #fff;
+        color: #FFFFFF;
         font-weight: bold;
-        border-bottom: 2px solid #e50914;
+        background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(57, 255, 20, 0.2));
+        border: 1px solid rgba(0, 212, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 20px;
+          height: 2px;
+          background: linear-gradient(90deg, #00D4FF, #39FF14);
+          border-radius: 1px;
+        }
       }
     }
   }
 }
 
 // Main content area
-.content-area {
+main {
   flex: 1;
-  padding: 2rem 4%;
-  background-color: #000;
-  color: #fff;
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 100%);
+  color: #FFFFFF;
   min-height: 60vh;
+  position: relative;
+  padding-bottom: 100px; // Space for enhanced player
 
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(57, 255, 20, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+  }
   .section-header {
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 1rem;
-    border-left: 4px solid #e50914;
+    border-left: 4px solid #00D4FF;
     padding-left: 1rem;
-    color: #fff;
+    color: #FFFFFF;
+    background: linear-gradient(135deg, #00D4FF, #39FF14);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .media-list {
@@ -96,11 +164,24 @@
 .app-footer {
   text-align: center;
   padding: 1.5rem 4%;
-  background-color: #000;
-  color: #808080;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  color: #B3B3B3;
   font-size: 0.8rem;
   margin-top: auto;
-  border-top: 1px solid #222;
+  border-top: 1px solid rgba(0, 212, 255, 0.2);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00D4FF, transparent);
+    opacity: 0.6;
+  }
 }
 
 // Responsive Enhancements
@@ -112,17 +193,23 @@
     padding: 1rem 0;
   }
 
-  .nav-links {
+  .main-nav .nav-list {
     flex-direction: column;
     gap: 10px;
     margin-top: 1rem;
+    width: 100%;
+
+    li a {
+      justify-content: center;
+      width: 100%;
+    }
   }
 
-  .nav-brand {
+  .brand {
     font-size: 1.5rem;
   }
 
-  .content-area {
+  main {
     padding: 1rem 2%;
   }
 
@@ -138,5 +225,68 @@
 
   .section-header {
     font-size: 1.2rem;
+  }
+}
+
+// Enhanced animations and effects
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(0, 212, 255, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00D4FF, #39FF14);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #39FF14, #00D4FF);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+// Selection styling
+::selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #FFFFFF;
+}
+
+::-moz-selection {
+  background: rgba(0, 212, 255, 0.3);
+  color: #FFFFFF;
+}
+
+// Focus styles for accessibility
+*:focus {
+  outline: 2px solid #00D4FF;
+  outline-offset: 2px;
+}
+
+// Reduced motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

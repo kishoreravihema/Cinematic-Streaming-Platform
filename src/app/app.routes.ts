@@ -4,6 +4,7 @@ import { VideoListComponent } from './Features/video-list/video-list-component/v
 import { HomeComponent } from './Features/home/home-component/home-component';
 import { StreamEngineComponent } from './Features/StreamEngineComponent/stream-engine-component/stream-engine-component';
 import { VideoPlayerComponent } from './Features/video/video-component/video-component';
+import { GlobalSearchComponent } from './Features/search/global-search.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'videos', pathMatch: 'full' },
@@ -12,6 +13,7 @@ export const routes: Routes = [
   { path: 'watch/:id', component: VideoPlayerComponent },
   { path: 'music/:id', component: MusicComponent },
   { path: 'stream', component: StreamEngineComponent }, 
+  { path: 'search', component: GlobalSearchComponent },
   { path: '**', redirectTo: 'videos' }
 ];
 
