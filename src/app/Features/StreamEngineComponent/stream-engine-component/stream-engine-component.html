@@ -1,0 +1,73 @@
+<div class="stream-engine">
+  <h1 class="title">🎬 Parrot-like Stream & Download</h1>
+
+  <!-- URL Input Form -->
+  <form (ngSubmit)="onDetect()" [formGroup]="form" class="url-form" novalidate>
+    <label for="url">Enter full video/audio URL</label>
+    <div class="input-row">
+      <input
+        id="url"
+        formControlName="url"
+        placeholder="https://..."
+        [class.invalid]="urlControl?.invalid && urlControl?.touched"
+      />
+      <button type="submit" [disabled]="form.invalid">Detect</button>
+    </div>
+    <small class="helper" *ngIf="urlControl?.invalid && urlControl?.touched">
+      Enter a valid URL starting with http/https
+    </small>
+  </form>
+
+  <!-- Detection Status -->
+  <div class="status" *ngIf="detection">
+    <p><strong>Platform:</strong> {{ detection.platform | titlecase }}</p>
+    <p *ngIf="detection.id"><strong>ID:</strong> {{ detection.id }}</p>
+    <p>
+      <strong>Raw URL:</strong>
+      <a [href]="detection.rawUrl" target="_blank" rel="noopener">{{ detection.rawUrl }}</a>
+    </p>
+    <div class="actions">
+      <button (click)="onPreview()" [disabled]="loadingPreview">Preview / Stream</button>
+      <button (click)="onDownload()" [disabled]="loadingDownload">Download</button>
+      <button (click)="resetState()">Reset</button>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div class="loading" *ngIf="loadingPreview || loadingDownload">
+    <em *ngIf="loadingPreview">Preparing preview...</em>
+    <em *ngIf="loadingDownload">Preparing download...</em>
+  </div>
+
+  <!-- Error -->
+  <div class="error" *ngIf="error">
+    ❗ {{ error }}
+  </div>
+
+  <!-- Preview -->
+  <div class="preview" *ngIf="embedSafeUrl">
+    <h3>Preview</h3>
+    <div class="embed-wrap">
+      <iframe [src]="embedSafeUrl" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+    <div class="preview-meta" *ngIf="previewInfo">
+      <p><strong>{{ previewInfo.title }}</strong></p>
+      <img *ngIf="previewInfo.thumbnail" [src]="previewInfo.thumbnail" alt="thumb" />
+    </div>
+  </div>
+
+  <!-- Direct Terabox video (blob source) -->
+  <div class="preview" *ngIf="videoSrc">
+    <h3>Terabox Stream</h3>
+    <video [src]="videoSrc" controls playsinline></video>
+  </div>
+
+  <!-- Notice -->
+  <div class="notice">
+    <small>
+      ⚠️ This client only detects and requests preview/download. The heavy lifting (extracting direct streams, converting,
+      honoring DRM or copyright)
+      must be handled by your backend. Ensure you comply with platform terms and local law.
+    </small>
+  </div>
+</div>

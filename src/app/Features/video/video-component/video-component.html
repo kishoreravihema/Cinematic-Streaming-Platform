@@ -1,0 +1,77 @@
+<div class="video-container">
+  <!-- Loading spinner -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Loading video...</p>
+  </div>
+
+  <!-- Error state -->
+  <div *ngIf="errorMessage && !isLoading" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Video Player Section -->
+  <div *ngIf="!isLoading && !errorMessage" class="video-frame">
+    <!-- Local Stream (HLS/mp4) -->
+    <video
+      #videoPlayer
+      *ngIf="embedType === 'LOCAL'"
+      class="video-player"
+      controls
+      [poster]="thumbnailUrl"
+      playsinline
+    ></video>
+
+    <!-- Remote iframe -->
+    <iframe
+      *ngIf="embedType === 'REMOTE' && safeUrl"
+      class="video-iframe"
+      [src]="safeUrl"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
+
+    <!-- YouTube video -->
+    <iframe
+      *ngIf="embedType === 'VIDEO' && safeUrl"
+      class="video-iframe"
+      [src]="safeUrl"
+      frameborder="0"
+      allow="autoplay; encrypted-media; fullscreen"
+      allowfullscreen
+    ></iframe>
+
+    <!-- YouTube playlist -->
+    <iframe
+      *ngIf="embedType === 'PLAYLIST' && safeUrl"
+      class="video-iframe"
+      [src]="safeUrl"
+      frameborder="0"
+      allow="autoplay; encrypted-media; fullscreen"
+      allowfullscreen
+    ></iframe>
+
+    <!-- Channel Playlists -->
+    <div *ngIf="embedType === 'CHANNEL_PLAYLISTS'" class="channel-warning">
+      <p>YouTube channel playlists cannot be embedded. Opened in new tab.</p>
+    </div>
+  </div>
+
+  <!-- Audio Track Selector -->
+  <div
+    *ngIf="embedType === 'LOCAL' && availableAudioTracks.length > 1"
+    class="audio-track-selector"
+  >
+    <label for="audioTrack">Audio Track:</label>
+    <select
+      id="audioTrack"
+      [value]="selectedAudioTrack"
+      (change)="onAudioTrackChange($event)"
+    >
+      <option *ngFor="let track of availableAudioTracks" [value]="track.lang">
+        {{ track.label }}
+      </option>
+    </select>
+  </div>
+</div>

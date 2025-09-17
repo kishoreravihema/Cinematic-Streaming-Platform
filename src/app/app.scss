@@ -1,0 +1,142 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #141414;
+  color: #e5e5e5;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Header and Navigation Styling
+.app-header {
+  background-color: #141414;
+  padding: 0 4%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+    flex-wrap: wrap;
+  }
+
+  .nav-brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #e50914;
+    text-decoration: none;
+    letter-spacing: -1px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #ff3c3c;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+    flex-wrap: wrap;
+
+    li {
+      a {
+        color: #e5e5e5;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #b3b3b3;
+        }
+      }
+
+      &.active-link a {
+        color: #fff;
+        font-weight: bold;
+        border-bottom: 2px solid #e50914;
+      }
+    }
+  }
+}
+
+// Main content area
+.content-area {
+  flex: 1;
+  padding: 2rem 4%;
+  background-color: #000;
+  color: #fff;
+  min-height: 60vh;
+
+  .section-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    border-left: 4px solid #e50914;
+    padding-left: 1rem;
+    color: #fff;
+  }
+
+  .media-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+// Footer Styling
+.app-footer {
+  text-align: center;
+  padding: 1.5rem 4%;
+  background-color: #000;
+  color: #808080;
+  font-size: 0.8rem;
+  margin-top: auto;
+  border-top: 1px solid #222;
+}
+
+// Responsive Enhancements
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem 0;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 1rem;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+  }
+
+  .content-area {
+    padding: 1rem 2%;
+  }
+
+  .app-footer {
+    font-size: 0.7rem;
+    padding: 1rem 2%;
+  }
+
+  .media-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+
+  .section-header {
+    font-size: 1.2rem;
+  }
+}

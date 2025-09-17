@@ -1,0 +1,56 @@
+<header class="app-header" role="banner">
+  <div class="container nav-container">
+    <a class="brand" routerLink="/" aria-label="Home – KStream">KStream</a>
+
+    <nav class="main-nav" aria-label="Primary Navigation">
+      <ul class="nav-list">
+        <li 
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a 
+            routerLink="/music/1" 
+            aria-current="page"
+          >
+            <span aria-hidden="true">🎵</span>
+            <span class="link-text">Music</span>
+          </a>
+        </li>
+
+        <li 
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a 
+            routerLink="/video/1"
+          >
+            <span aria-hidden="true">🎬</span>
+            <span class="link-text">Video</span>
+          </a>
+        </li>
+
+        <li 
+          routerLinkActive="active-link" 
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a 
+            routerLink="/stream"
+          >
+            <span aria-hidden="true">📺</span>
+            <span class="link-text">Stream</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="app-footer" role="contentinfo">
+  <div class="container">
+    <p>© 2025 StreamFlix Entertainment. All rights reserved.</p>
+  </div>
+</footer>

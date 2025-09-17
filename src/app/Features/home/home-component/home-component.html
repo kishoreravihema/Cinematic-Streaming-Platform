@@ -1,0 +1,38 @@
+<div class="home-container">
+  <div class="tab-selector">
+    <button [class.active]="activeTab === 'music'" (click)="switchTab('music')">🎵 Music</button>
+    <button [class.active]="activeTab === 'video'" (click)="switchTab('video')">🎬 Video</button>
+  </div>
+
+  <!-- Music List -->
+  <div *ngIf="activeTab === 'music'" class="media-list">
+    <div *ngFor="let music of musicList" class="media-card">
+      <img [src]="music.thumbnailUrl || 'assets/default-music.png'" alt="{{ music.title }}" />
+      <div class="media-info">
+        <h4>{{ music.title }}</h4>
+        <p>{{ getArtistNames(music) }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video List -->
+  <div *ngIf="activeTab === 'video'" class="media-list">
+    <div *ngFor="let video of videoList" class="media-card">
+      <img [src]="video.thumbnailUrl || 'assets/default-video.jpg'" alt="{{ video.title }}" />
+      <div class="media-info">
+        <h4>{{ video.title }}</h4>
+        <p>Category ID: {{ video.categoryId }}</p>
+        <p>Category Name: {{ getCategoryName(video.categoryId) }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="(activeTab === 'music' && musicPage <= 1) || (activeTab === 'video' && videoPage <= 1)">⏪ Prev</button>
+    <span>
+      Page: {{ activeTab === 'music' ? musicPage : videoPage }}
+    </span>
+    <button (click)="nextPage()">Next ⏩</button>
+  </div>
+</div>

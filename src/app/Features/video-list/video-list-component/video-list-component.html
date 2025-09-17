@@ -1,0 +1,118 @@
+<div class="video-list-container">
+
+  <!-- 🎥 Header -->
+  <h1 class="video-list-header">🎬 Video Playlist</h1>
+
+  <!-- 🧱 Playlist Scroll -->
+  <div class="playlist-scroll-container">
+    <div
+      class="playlist-card"
+      *ngFor="let playlist of playlists; trackBy: trackByPlaylistId"
+      (click)="selectPlaylist(playlist)"
+      role="button"
+      tabindex="0"
+      [attr.aria-label]="'Select playlist ' + playlist.name"
+    >
+      <img
+        [src]="playlist.coverImageUrl || 'assets/DefaultVideoImage.png'"
+        alt="{{ playlist.name }}"
+        class="playlist-thumbnail"
+        loading="lazy"
+        (error)="onThumbnailError($event)"
+      />
+      <div class="playlist-name">{{ playlist.name }}</div>
+    </div>
+  </div>
+
+  <!-- 📂 Playlist Dropdown (Alternative selector for accessibility) -->
+  <div class="playlist-selector">
+    <label for="playlistSelect">Select Playlist:</label>
+    <select id="playlistSelect" class="form-select" (change)="onPlaylistChange($event)"
+            [ngModel]="selectedPlaylistId || 0">
+      <option [value]="0">All Videos</option>
+      <option *ngFor="let playlist of playlists" [value]="playlist.id">
+        {{ playlist.name }}
+      </option>
+    </select>
+  </div>
+
+<!-- 🎭 Category Filter -->
+<div class="category-filter">
+  <button class="btn" (click)="filterByCategory('Drama')"
+          [class.active]="selectedCategory === 'Drama'">Drama</button>
+  <button class="btn" (click)="filterByCategory('Action')"
+          [class.active]="selectedCategory === 'Action'">Action</button>
+  <button class="btn" (click)="filterByCategory('Comedy')"
+          [class.active]="selectedCategory === 'Comedy'">Comedy</button>
+  <button class="btn" (click)="filterByCategory('Romance')"
+          [class.active]="selectedCategory === 'Romance'">Romance</button>
+  <button class="btn" (click)="filterByCategory('Sci-Fi')"
+          [class.active]="selectedCategory === 'Sci-Fi'">Sci-Fi</button>
+  <button class="btn" (click)="filterByCategory('Horror')"
+          [class.active]="selectedCategory === 'Horror'">Horror</button>
+  <button class="btn" (click)="filterByCategory('Music')"
+          [class.active]="selectedCategory === 'Music'">Music</button>
+ <button class="btn" (click)="filterByCategory('Cinema')"
+          [class.active]="selectedCategory === 'Cinema'">Cinema</button>
+  <button class="btn" (click)="filterByCategory('Documentary')"
+          [class.active]="selectedCategory === 'Documentary'">Documentary</button>
+  <button class="btn" (click)="filterByCategory('Kids')"
+          [class.active]="selectedCategory === 'Kids'">Kids</button>
+</div>
+
+
+  <!-- ⏳ Loading -->
+  <div *ngIf="isLoading" class="loading-spinner">
+    Loading videos...
+  </div>
+
+  <!-- ⚠️ Error -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <!-- 📭 No Videos -->
+  <div *ngIf="!isLoading && videoList.length === 0 && !errorMessage" class="no-videos-message">
+    No videos found.
+  </div>
+
+  <!-- 📺 YouTube Embed -->
+  <div *ngIf="selectedPlaylistUrl" class="youtube-embed">
+    <iframe
+      [src]="getSafeUrl(selectedPlaylistUrl)"
+      class="video-frame"
+      frameborder="0"
+      allowfullscreen
+      title="YouTube Playlist"
+    ></iframe>
+  </div>
+
+  <!-- 🎬 Video Grid -->
+  <div class="video-grid" *ngIf="!isLoading && videoList.length > 0">
+    <div
+      class="video-card"
+      *ngFor="let video of videoList; trackBy: trackByVideoId"
+      (click)="openVideo(video.id)"
+      role="listitem"
+      tabindex="0"
+      [attr.aria-label]="'Watch ' + video.title"
+    >
+      <img
+        [src]="video.thumbnailUrl || 'assets/default-thumbnail.jpg'"
+        alt="{{ video.title }}"
+        class="video-thumbnail"
+        loading="lazy"
+        (error)="onThumbnailError($event)"
+      />
+      <div class="video-title">{{ video.title }}</div>
+    </div>
+  </div>
+
+  <!-- 📄 Pagination -->
+  <div class="pagination-controls" *ngIf="!isLoading && videoList.length > 0">
+    <button (click)="prevPage()" [disabled]="videoPage === 1">⏪ Prev</button>
+    <span>Page {{ videoPage }}</span>
+    <button (click)="nextPage()">Next ⏩</button>
+  </div>
+
+</div>
